@@ -28,10 +28,10 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        if ($comment->user_id != auth()->user()->id && auth()->user()->is_admin == false) {
+        if ($comment->user_id != auth()->user()->id && auth()->user()->is_admin == false &&  $comment->post->user_id != auth()->user()->id) {
             flash()->overlay("You can't delete other peoples comment.");
 
-            return redirect('/admin/posts');
+            return redirect('/admin/comments');
         }
 
         $comment->delete();
